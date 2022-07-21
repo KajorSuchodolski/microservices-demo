@@ -12,4 +12,5 @@ public class GetAccountDto {
     private String login;
     private String firstName;
     private String lastName;
+    private String roles;
 }

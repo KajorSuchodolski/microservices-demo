@@ -16,6 +16,7 @@ public class AccountMapper {
                 .login(account.getLogin())
                 .firstName(account.getFirstName())
                 .lastName(account.getLastName())
+                .roles(account.getRoles())
                 .build();
     }
 

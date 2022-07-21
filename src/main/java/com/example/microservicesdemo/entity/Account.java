@@ -56,4 +56,10 @@ public class Account {
     @Getter
     @Setter
     private String lastName;
+
+    @Column(name = "roles", nullable = true)
+    @Basic(optional = true)
+    @Getter
+    @Setter
+    private String roles;
 }

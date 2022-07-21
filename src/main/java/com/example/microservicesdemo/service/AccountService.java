@@ -31,13 +31,16 @@ public class AccountService {
 
     @PostConstruct
     public void init() {
-        for(int i = 0; i < 100; i++) {
+        for (int i = 0; i < 50; i++) {
             Account account = new Account();
             account.setId(UUID.randomUUID());
             account.setLogin(faker.name().username());
             account.setPassword(bCryptPasswordEncoder.encode("Haslo123"));
             account.setFirstName(faker.name().firstName());
             account.setLastName(faker.name().lastName());
+
+            if (i % 4 == 0) account.setRoles("ADMINISTRATOR");
+
             accountRepository.save(account);
         }
     }
