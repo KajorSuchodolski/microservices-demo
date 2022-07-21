@@ -10,6 +10,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class MicroservicesDemoApplication {
 
+    public static void main(String[] args) {
+        SpringApplication.run(MicroservicesDemoApplication.class, args);
+    }
+
     @Bean
     public Faker faker() {
         return new Faker();
@@ -18,10 +22,6 @@ public class MicroservicesDemoApplication {
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(MicroservicesDemoApplication.class, args);
     }
 
 }

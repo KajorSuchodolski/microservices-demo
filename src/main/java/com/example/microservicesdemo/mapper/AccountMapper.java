@@ -6,7 +6,6 @@ import com.example.microservicesdemo.dto.GetAccountDto;
 import com.example.microservicesdemo.dto.UpdateAccountDto;
 import com.example.microservicesdemo.entity.Account;
 
-import java.util.List;
 import java.util.UUID;
 
 public class AccountMapper {
@@ -37,9 +36,4 @@ public class AccountMapper {
         return account;
     }
 
-    public static List<GetAccountDto> accountsToGetAccountDtos(List<Account> accounts) {
-        return accounts.stream()
-                .map(AccountMapper::accountToGetAccountDto)
-                .toList();
-    }
 }
