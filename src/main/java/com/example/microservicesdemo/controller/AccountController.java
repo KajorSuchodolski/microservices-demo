@@ -1,6 +1,8 @@
 package com.example.microservicesdemo.controller;
 
 import com.example.microservicesdemo.entity.Account;
+import com.example.microservicesdemo.mapper.AccountMapper;
+import com.example.microservicesdemo.model.GetAccountDto;
 import com.example.microservicesdemo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,7 @@ public class AccountController {
     }
 
     @GetMapping
-    public List<Account> getAllAccounts() {
-        return accountService.getAllAccounts();
+    public List<GetAccountDto> getAllAccounts() {
+        return AccountMapper.accountsToGetAccountDtos(accountService.getAllAccounts());
     }
 }
