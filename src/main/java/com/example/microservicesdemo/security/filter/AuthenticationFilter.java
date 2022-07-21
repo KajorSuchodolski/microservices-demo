@@ -44,7 +44,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         String login = user.getUsername();
         Set<String> roles = Set.of(user.getAuthorities()
-                .toString().split(","));
+                .toString().replace("[", "").replace("]", "").split(","));
 
         String token = JwtUtil.generateJwtToken(login, roles);
         TokenResponse tokenResponse = new TokenResponse();

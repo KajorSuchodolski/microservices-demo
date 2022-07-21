@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -26,7 +25,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader("Authorization");
 
-        if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             log.info("Invalid authorization header");
             filterChain.doFilter(request, response);
             return;
@@ -34,7 +33,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
         String token = authorizationHeader.substring(BEARER.length());
 
-        if(!JwtUtil.verifyJwtToken(token)) {
+        if (!JwtUtil.verifyJwtToken(token)) {
             log.info("Invalid token provided");
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
@@ -53,7 +52,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(login, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info(authentication.toString());
         filterChain.doFilter(request, response);
     }
 }
