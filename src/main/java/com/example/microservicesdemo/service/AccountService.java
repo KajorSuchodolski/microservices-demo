@@ -4,6 +4,8 @@ import com.example.microservicesdemo.entity.Account;
 import com.example.microservicesdemo.repository.AccountRepository;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,7 @@ public class AccountService {
         }
     }
 
-    public List<Account> getAllAccounts() {
-        return accountRepository.findAll();
+    public Page<Account> getAllAccounts(Pageable pageable) {
+        return accountRepository.findAll(pageable);
     }
 }

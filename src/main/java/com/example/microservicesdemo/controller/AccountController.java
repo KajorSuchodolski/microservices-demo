@@ -5,8 +5,15 @@ import com.example.microservicesdemo.mapper.AccountMapper;
 import com.example.microservicesdemo.model.GetAccountDto;
 import com.example.microservicesdemo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,7 +30,21 @@ public class AccountController {
     }
 
     @GetMapping
-    public List<GetAccountDto> getAllAccounts() {
-        return AccountMapper.accountsToGetAccountDtos(accountService.getAllAccounts());
+    public ResponseEntity<Page<GetAccountDto>> getAllAccounts(@RequestParam(required = false, defaultValue = "1") int page,
+                                         @RequestParam(required = false, defaultValue = "10") int size,
+                                         @RequestParam(required = false, defaultValue = "firstName") String sortBy) {
+
+        if(!sortBy.equals("firstName") && !sortBy.equals("lastName") && !sortBy.equals("login")) {
+            throw new IllegalArgumentException("Sort by must be one of: firstName, lastName, login");
+        }
+
+        page = page < 1 ? 1 : page;
+        size = size < 1 ? 10 : size;
+
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(sortBy));
+        Page<GetAccountDto> accounts = accountService.getAllAccounts(pageable)
+                .map(AccountMapper::accountToGetAccountDto);
+
+        return ResponseEntity.ok(accounts);
     }
 }
