@@ -4,7 +4,6 @@ import com.example.microservicesdemo.dto.TokenResponse;
 import com.example.microservicesdemo.exception.InvalidCredentialsException;
 import com.example.microservicesdemo.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -47,7 +46,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         Set<String> roles = Set.of(user.getAuthorities()
                 .toString().split(","));
 
-        String token = JwtUtil.generateToken(login, roles);
+        String token = JwtUtil.generateJwtToken(login, roles);
         TokenResponse tokenResponse = new TokenResponse();
         tokenResponse.setJwt(token);
 

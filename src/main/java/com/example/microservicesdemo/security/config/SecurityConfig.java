@@ -1,6 +1,7 @@
 package com.example.microservicesdemo.security.config;
 
 import com.example.microservicesdemo.security.filter.AuthenticationFilter;
+import com.example.microservicesdemo.security.filter.AuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -33,13 +35,15 @@ public class SecurityConfig {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
-        http.authorizeRequests()
+        http
+                .authorizeRequests()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/accounts/**").hasRole("ADMINISTRATOR")
+                .antMatchers("/accounts/**").hasAuthority("ADMINISTRATOR")
                 .anyRequest().authenticated()
                 .and()
-                .authenticationManager(authenticationManager)
                 .addFilter(new AuthenticationFilter(authenticationManager))
+                .addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .authenticationManager(authenticationManager)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .csrf().disable();
