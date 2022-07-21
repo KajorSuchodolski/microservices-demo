@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,5 +43,15 @@ public class AccountService {
 
     public Page<Account> getAllAccounts(Pageable pageable) {
         return accountRepository.findAll(pageable);
+    }
+
+    public Account getAccountByLogin(String login) {
+        return accountRepository.findAccountByLogin(login)
+                .orElseThrow(() -> new NotFoundException("Account by given login: " + login + " has not been found"));
+    }
+
+    public Account getAccountById(UUID id) {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Account by given id: " + id + " has not been found"));
     }
 }
