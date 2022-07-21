@@ -1,20 +1,19 @@
 package com.example.microservicesdemo.entity;
 
-import lombok.NoArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name = "account", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "login", name = "login_unique_constraint")
-}, indexes = {
-        @Index(columnList = "id", name = "id_index"),
-        @Index(columnList = "login", name = "login_index"),
-})
+@Table(
+        name = "account",
+        uniqueConstraints = {@UniqueConstraint(columnNames = "login", name = "login_unique_constraint")},
+        indexes = {@Index(columnList = "id", name = "id_index"), @Index(columnList = "login", name = "login_index"),})
 @NoArgsConstructor
 @ToString
 public class Account {
