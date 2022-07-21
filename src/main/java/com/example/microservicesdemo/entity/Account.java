@@ -12,11 +12,13 @@ import java.util.UUID;
 @Entity
 @Table(
         name = "account",
-        uniqueConstraints = {@UniqueConstraint(columnNames = "login", name = "login_unique_constraint")},
+        uniqueConstraints = {@UniqueConstraint(columnNames = "login", name = Account.LOGIN_CONSTRAINT_NAME)},
         indexes = {@Index(columnList = "id", name = "id_index"), @Index(columnList = "login", name = "login_index"),})
 @NoArgsConstructor
 @ToString
 public class Account {
+
+    public static final String LOGIN_CONSTRAINT_NAME = "login_unique_constraint";
 
     @Id
     @Column(name = "id", nullable = false, updatable = false)

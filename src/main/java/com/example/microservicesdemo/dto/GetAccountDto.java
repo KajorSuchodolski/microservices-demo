@@ -1,4 +1,4 @@
-package com.example.microservicesdemo.model;
+package com.example.microservicesdemo.dto;
 
 import lombok.Builder;
 import lombok.Data;
