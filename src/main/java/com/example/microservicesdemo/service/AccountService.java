@@ -58,4 +58,14 @@ public class AccountService {
     public Account createAccount(Account account) {
         return accountRepository.save(account);
     }
+
+    public Account updateAccount(Account account) {
+        Account updatedAccount = accountRepository.findById(account.getId())
+                .orElseThrow(() -> new NotFoundException("Account by given id: " + account.getId() + " has not been found"));
+        updatedAccount.setLogin(account.getLogin());
+        updatedAccount.setPassword(account.getPassword());
+        updatedAccount.setFirstName(account.getFirstName());
+        updatedAccount.setLastName(account.getLastName());
+        return accountRepository.save(updatedAccount);
+    }
 }

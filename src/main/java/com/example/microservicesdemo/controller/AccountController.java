@@ -1,6 +1,7 @@
 package com.example.microservicesdemo.controller;
 
 import com.example.microservicesdemo.dto.CreateAccountDto;
+import com.example.microservicesdemo.dto.UpdateAccountDto;
 import com.example.microservicesdemo.entity.Account;
 import com.example.microservicesdemo.mapper.AccountMapper;
 import com.example.microservicesdemo.dto.GetAccountDto;
@@ -65,6 +66,15 @@ public class AccountController {
         Account account = AccountMapper.createAccountDtoToAccount(createAccountDto);
         Account createdAccount = accountService.createAccount(account);
         GetAccountDto createdGetAccountDto = AccountMapper.accountToGetAccountDto(createdAccount);
-        return ResponseEntity.ok(createdGetAccountDto);
+        return ResponseEntity.created(null).body(createdGetAccountDto);
     }
+
+    @PutMapping
+    public ResponseEntity<GetAccountDto> updateAccount(@RequestBody @Valid UpdateAccountDto updateAccountDto) {
+        Account account = AccountMapper.updateAccountDtoToAccount(updateAccountDto);
+        Account updatedAccount = accountService.updateAccount(account);
+        GetAccountDto updatedGetAccountDto = AccountMapper.accountToGetAccountDto(updatedAccount);
+        return ResponseEntity.ok(updatedGetAccountDto);
+    }
+
 }
