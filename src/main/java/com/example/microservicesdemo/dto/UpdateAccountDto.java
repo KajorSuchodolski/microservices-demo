@@ -1,17 +1,22 @@
 package com.example.microservicesdemo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-import javax.validation.constraints.NotNull;
-import java.util.UUID;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+@Data
+public class UpdateAccountDto {
 
 
-public class UpdateAccountDto extends CreateAccountDto {
+    @NotBlank(message = "First name is required")
+    @Pattern(regexp = "^[a-zA-Z]*$", message = "First name must be alphabetic")
+    @Size(min = 3, max = 20, message = "First name must be between 3 and 20 characters")
+    private String firstName;
 
-    @NotNull(message = "Id is required")
-    @Getter
-    @Setter
-    private UUID id;
-
+    @NotBlank(message = "Last name is required")
+    @Pattern(regexp = "^[a-zA-Z]*$", message = "Last name must be alphabetic")
+    @Size(min = 3, max = 20, message = "Last name must be between 3 and 20 characters")
+    private String lastName;
 }

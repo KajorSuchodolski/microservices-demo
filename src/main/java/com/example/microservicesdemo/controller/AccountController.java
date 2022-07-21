@@ -69,12 +69,19 @@ public class AccountController {
         return ResponseEntity.created(null).body(createdGetAccountDto);
     }
 
-    @PutMapping
-    public ResponseEntity<GetAccountDto> updateAccount(@RequestBody @Valid UpdateAccountDto updateAccountDto) {
+    @PutMapping("/{login}")
+    public ResponseEntity<GetAccountDto> updateAccount(@PathVariable(name = "login") String login,
+                                                       @RequestBody @Valid UpdateAccountDto updateAccountDto) {
         Account account = AccountMapper.updateAccountDtoToAccount(updateAccountDto);
-        Account updatedAccount = accountService.updateAccount(account);
+        Account updatedAccount = accountService.updateAccount(account, login);
         GetAccountDto updatedGetAccountDto = AccountMapper.accountToGetAccountDto(updatedAccount);
         return ResponseEntity.ok(updatedGetAccountDto);
+    }
+
+    @DeleteMapping("/{login}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable(name = "login") String login) {
+        accountService.deleteAccount(login);
+        return ResponseEntity.noContent().build();
     }
 
 }

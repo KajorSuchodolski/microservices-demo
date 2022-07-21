@@ -10,11 +10,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
-import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class AccountService {
 
     private final AccountRepository accountRepository;
@@ -59,13 +60,16 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public Account updateAccount(Account account) {
-        Account updatedAccount = accountRepository.findById(account.getId())
-                .orElseThrow(() -> new NotFoundException("Account by given id: " + account.getId() + " has not been found"));
-        updatedAccount.setLogin(account.getLogin());
-        updatedAccount.setPassword(account.getPassword());
+    public Account updateAccount(Account account, String login) {
+        Account updatedAccount = accountRepository.findAccountByLogin(login)
+                .orElseThrow(() -> new NotFoundException("Account by given login: " + login + " has not been found"));
+
         updatedAccount.setFirstName(account.getFirstName());
         updatedAccount.setLastName(account.getLastName());
         return accountRepository.save(updatedAccount);
+    }
+
+    public void deleteAccount(String login) {
+        accountRepository.deleteAccountByLogin(login);
     }
 }

@@ -32,9 +32,6 @@ public class AccountMapper {
 
     public static Account updateAccountDtoToAccount(UpdateAccountDto updateAccountDto) {
         Account account = new Account();
-        account.setId(updateAccountDto.getId());
-        account.setLogin(updateAccountDto.getLogin());
-        account.setPassword(updateAccountDto.getPassword());
         account.setFirstName(updateAccountDto.getFirstName());
         account.setLastName(updateAccountDto.getLastName());
         return account;
