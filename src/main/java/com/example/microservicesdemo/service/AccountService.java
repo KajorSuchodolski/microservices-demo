@@ -54,11 +54,6 @@ public class AccountService {
                 .orElseThrow(() -> new NotFoundException("Account by given login: " + login + " has not been found"));
     }
 
-    public Account getAccountById(UUID id) {
-        return accountRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Account by given id: " + id + " has not been found"));
-    }
-
     public Account createAccount(Account account) {
         return accountRepository.save(account);
     }

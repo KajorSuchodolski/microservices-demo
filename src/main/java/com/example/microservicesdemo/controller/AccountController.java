@@ -11,11 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/accounts")
@@ -54,19 +54,12 @@ public class AccountController {
         return ResponseEntity.ok(getAccountDto);
     }
 
-    @GetMapping("/id/{id}")
-    public ResponseEntity<GetAccountDto> getAccountById(@PathVariable(name = "id") UUID id) {
-        Account account = accountService.getAccountById(id);
-        GetAccountDto getAccountDto = AccountMapper.accountToGetAccountDto(account);
-        return ResponseEntity.ok(getAccountDto);
-    }
-
     @PostMapping
     public ResponseEntity<GetAccountDto> createAccount(@RequestBody @Valid CreateAccountDto createAccountDto) {
         Account account = AccountMapper.createAccountDtoToAccount(createAccountDto);
         Account createdAccount = accountService.createAccount(account);
         GetAccountDto createdGetAccountDto = AccountMapper.accountToGetAccountDto(createdAccount);
-        return ResponseEntity.created(null).body(createdGetAccountDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdGetAccountDto);
     }
 
     @PutMapping("/{login}")
