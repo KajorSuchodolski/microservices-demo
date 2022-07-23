@@ -1,19 +1,19 @@
 package com.example.accountservice.util;
 
 import io.jsonwebtoken.*;
+import lombok.NoArgsConstructor;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Date;
 import java.util.Set;
 
+@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class JwtUtil {
 
     private static final String SECRET = "CxJg-jun3gY4CuLcNBtM1Fl9BqbsyeWglTymfgIq-5A";
     private static final int EXPIRATION_TIME = 30 * 60 * 1000; // 30 minutes
 
-    private JwtUtil() {
-    }
 
     public static String generateJwtToken(String login, Set<String> roles) {
 

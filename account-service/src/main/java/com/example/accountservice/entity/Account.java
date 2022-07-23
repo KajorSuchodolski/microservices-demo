@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(
-        name = "account",
+        name = "accounts",
         uniqueConstraints = {@UniqueConstraint(columnNames = "login", name = Account.LOGIN_CONSTRAINT_NAME)},
         indexes = {@Index(columnList = "id", name = "id_index"), @Index(columnList = "login", name = "login_index"),})
 @NoArgsConstructor
