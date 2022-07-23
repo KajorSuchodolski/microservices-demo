@@ -5,13 +5,12 @@ import com.example.accountservice.dto.CreateAccountDto;
 import com.example.accountservice.dto.GetAccountDto;
 import com.example.accountservice.dto.UpdateAccountDto;
 import com.example.accountservice.entity.Account;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class AccountMapper {
-
-    private AccountMapper() {
-    }
 
     public static GetAccountDto accountToGetAccountDto(Account account) {
         return GetAccountDto.builder()
