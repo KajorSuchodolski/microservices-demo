@@ -31,6 +31,17 @@ public class AccountService {
 
     @PostConstruct
     public void init() {
+
+        Account firstAccount = new Account();
+        firstAccount.setId(UUID.randomUUID());
+        firstAccount.setLogin("admin");
+        firstAccount.setPassword(bCryptPasswordEncoder.encode("admin1"));
+        firstAccount.setFirstName("Admin");
+        firstAccount.setLastName("Admin");
+        firstAccount.setRoles("ADMINISTRATOR");
+        accountRepository.save(firstAccount);
+
+
         for (int i = 0; i < 50; i++) {
             Account account = new Account();
             account.setId(UUID.randomUUID());
@@ -58,13 +69,14 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
+    @Transactional
     public Account updateAccount(Account account, String login) {
         Account updatedAccount = accountRepository.findAccountByLogin(login)
                 .orElseThrow(() -> new NotFoundException("Account by given login: " + login + " has not been found"));
 
         updatedAccount.setFirstName(account.getFirstName());
         updatedAccount.setLastName(account.getLastName());
-        return accountRepository.save(updatedAccount);
+        return updatedAccount;
     }
 
     public void deleteAccount(String login) {
