@@ -12,7 +12,7 @@ import java.util.UUID;
 @Entity
 @Table(
         name = "orders",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"id", "client_id"}, name = "order_id_client_id_unique"),
+        uniqueConstraints = @UniqueConstraint(columnNames = "client_id", name = "client_id_unique"),
         indexes = @Index(name = "order_id_client_id_index", columnList = "id, client_id")
 )
 @NoArgsConstructor
@@ -41,4 +41,10 @@ public class Order {
     @Getter
     @Setter
     private UUID clientId;
+
+    @Column(name = "login", nullable = false)
+    @Basic(optional = false)
+    @Getter
+    @Setter
+    private String login;
 }

@@ -43,6 +43,14 @@ public class OrderController {
         GetOrderDto orderDto = OrderMapper.orderToGetOrderDto(order);
         return ResponseEntity.ok().body(orderDto);
     }
+
+    @PostMapping("/{login}")
+    public ResponseEntity<GetOrderDto> createOrder(@PathVariable(value = "login") String login,
+                                                   @RequestHeader(value = "Authorization") String token) {
+        Order createdOrder = orderService.createOrder(login, token);
+        GetOrderDto orderDto = OrderMapper.orderToGetOrderDto(createdOrder);
+        return ResponseEntity.ok().body(orderDto);
+    }
 }
 
 

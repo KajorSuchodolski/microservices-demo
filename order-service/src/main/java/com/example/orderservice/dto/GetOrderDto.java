@@ -13,5 +13,6 @@ public class GetOrderDto {
     private UUID id;
     private Instant createdAt;
     private UUID clientId;
+    private String login;
 
 }
