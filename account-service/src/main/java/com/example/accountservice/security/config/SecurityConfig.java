@@ -36,7 +36,6 @@ public class SecurityConfig {
 
         http
                 .authorizeRequests()
-                .antMatchers("login").permitAll()
                 .antMatchers("/accounts/**").hasAuthority("ADMINISTRATOR")
                 .anyRequest().authenticated()
                 .and()
